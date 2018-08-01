@@ -12,7 +12,8 @@
 10、设置简单的输入框，作为下行传输测试。
 11、使用python作为主要语言，使用自带的数据库。12、不涉及手机APP的部分。
 
-python -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip 国内源 -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pipenv
 
 
 /*可以参考IBOX历程中的做法*/
