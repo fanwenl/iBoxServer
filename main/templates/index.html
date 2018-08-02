@@ -1,1 +1,99 @@
-<p>iBox Manager</p>
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iBox Data Manager</title>
+
+  {% bootstrap_css %} {% bootstrap_javascript %}
+</head>
+
+<body>
+  <!--Static navbar-->
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <p class="navbar-brand">iBox Data Manager</p>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="admin/">iBox Admin</a>
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </nav>
+  <div class="alert alert-primary" role="alert">
+      <h1 style="text-align: center">iBox Data Manager</h1>
+      <hr />
+  </div>
+
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .left {
+      width: 500px;
+      height: 500px;
+      float:left;
+    }
+
+    .right {
+      width: 300px;
+      height: 200px;
+      float: right;
+    }
+  </style>
+
+  <div class="left">
+    <table border="1">
+      <caption>Message Data</caption>
+      <tr>
+        <th>姓名</th>
+        <th>电话</th>
+        <th>电话</th>
+      </tr>
+      <tr>
+        <td>100</td>
+        <td>200</td>
+        <td>300</td>
+      </tr>
+      <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+      </tr>
+    </table>
+  </div>
+  <div class="right">
+    <table border="1">
+      <caption>Message Send</caption>
+      <tr>
+        <th>项目</th>
+        <th>主题</th>
+        <th>数据</th>
+      </tr>
+      <tr>
+        <td>RTC</td>
+        <td>mqtt/con_all</td>
+        <td>200</td>
+      </tr>
+      <tr>
+        <td>DAC</td>
+        <td>400</td>
+        <td>600</td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+
+</html>

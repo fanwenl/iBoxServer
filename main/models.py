@@ -7,5 +7,19 @@ class publish_rtc(models.Model):
 class publish_dac(models.Model):
     """ 单独下发DAC的值 """
 
-class display_msg(models.Model):
-    """ 显示上报的MSG """
+class msg(models.Model):
+    """ MSG 数据模型 """
+    time = models.DateTimeField()
+    sn = models.IntegerField()
+    imei = models.IntegerField()
+    eth_mac = models.CharField(max_length=12)
+    wifi_mac = models.CharField(max_length=12)
+    temper = models.IntegerField()
+    adc1 = models.SmallIntegerField()
+    adc2 = models.SmallIntegerField()
+    rs485 = models.SmallIntegerField()
+    lora1 = models.SmallIntegerField()
+    lora2 = models.SmallIntegerField()
+
+    def __str__(self):
+        return self.sn;
