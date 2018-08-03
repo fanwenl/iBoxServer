@@ -1,10 +1,12 @@
 # coding=utf-8
-import paho.mqtt.client as mqtt
-import paho.mqtt.publish as publish
-import threading
-import time
 import json
 import sqlite3
+import threading
+import time
+
+import paho.mqtt.client as mqtt
+import paho.mqtt.publish as publish
+
 
 class MqttClient:
     client = mqtt.Client('master')
@@ -61,7 +63,7 @@ class MqttClient:
         return msd_data
 
     def publish_loop(self):
-        pass
+        passs
 
 def msg_topic_callback(data):
     print(data)
