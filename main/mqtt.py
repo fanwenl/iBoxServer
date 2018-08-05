@@ -3,6 +3,7 @@ import json
 import sqlite3
 import threading
 import time
+from datetime import datetime
 
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
@@ -19,7 +20,8 @@ class MqttClient:
 
     def connect(self, username='tester', password='tester'):
         self.client.username_pw_set(username, password)
-        self.client.connect(self._host, self._port, 60)  # 连接服务器,端口为1883,维持心跳为60秒
+        # 连接服务器,端口为1883,维持心跳为60秒
+        self.client.connect(self._host, self._port, 60)
 
     def disconnect(self):
         self.client.disconnect()
@@ -63,7 +65,8 @@ class MqttClient:
         return msd_data
 
     def publish_loop(self):
-        passs
+        pass
+
 
 def msg_topic_callback(data):
     print(data)
@@ -74,33 +77,40 @@ def msg_topic_callback(data):
     print(data_list[0])
     print(data_list[0]['temper'])
 
+    # cx = sqlite3.connect("db.sqlite3")
+    # cu = cx.cursor()
+
+    # save_sql = '''insert into main_msg values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    # data = (None, datetime.now(), 223, 444, "00:00:00:01",
+    #         "00:00:00:02", 99, 00, 00, 00, 00, 11)
+    # cu.execute(save_sql, data)
+
+    # cx.commit()
+    # cx.close()
+    my_msg = msg(None)
+    my_msg.save()
+
+
 HOST = "121.40.104.4"
 PORT = 61613
-def mqtt_main(client):
-#    HOST = "121.40.104.4"
-#    PORT = 61613
+client = MqttClient(HOST, PORT)
+
+# def mqtt_main(client):
+    #    HOST = "121.40.104.4"
+    #    PORT = 61613
     #client = MqttClient(HOST, PORT)
-    client.connect('admin','password')
-    client.publish('test-0', '我上线啦!')
-    client.loop()
+    # client.connect('admin', 'password')
+    # client.publish('test-0', '我上线啦!')
+    # client.loop()
+
+
+def mqtt_publish(topic, message):
+    client.publish(topic, message)
+
 
 if __name__ == '__main__':
-
-    zzid = time.strftime('%Y-%m-%d%H:%M:%S',time.localtime(1533200000))
-
-    cx=sqlite3.connect("db.sqlite3")
-    cu=cx.cursor()
-    
-    save_sql = '''insert into main_msg values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-    data = (None,zzid,223,444,"00:00:00:01","00:00:00:02",99,00,00,00,00,11)
-    cu.execute(save_sql, data)
-
-    cx.commit()
-    cx.close()
-
-    client = MqttClient(HOST, PORT)
-    mqtt_main(client)
+    client.connect('admin', 'password')
+    client.publish('test-0', '我上线啦!')
+    client.loop()
     while True:
-        data_json="pc"#方法返回一个包含CPU和进程信息的JSON字符串
-        client.publish('test-123',data_json)
         time.sleep(2)

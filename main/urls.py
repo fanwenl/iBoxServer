@@ -1,12 +1,11 @@
+from django.urls import path
 from . import views
-from django.urls import path, include
-
 
 app_name = 'main'
 
 urlpatterns = [
-    path('', views.index, name = 'index'),
-    path('', views.display_msg, name = 'display_msg'),
-    path('', views.publish_rtc, name = 'publish_rtc'),
-    path('', views.publish_dac, name = 'publish_dac'),
+    path('', views.index, name='index'),
+    path('msg/', views.display_msg, name='display_msg'),
+    path('rtc/', views.publish_rtc, name='publish_rtc'),
+    path('dac/', views.publish_dac, name='publish_dac'),
 ]

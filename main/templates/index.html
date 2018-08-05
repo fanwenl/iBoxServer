@@ -10,40 +10,7 @@
   <title>iBox Data Manager</title>
 
   {% bootstrap_css %} {% bootstrap_javascript %}
-  <style type="text/css">
-    .left {
-      width: 50px;
-      height: 30px;
-      float: left;
-    }
 
-    .center {
-      width: 50px;
-      height: 30px;
-      float: right;
-    }
-
-    .right {
-      width: 50px;
-      height: 30px;
-      float: right;
-    }
-  </style>
-  <style>
-    table.lamp {
-      width: 100%;
-      border: 1px solid #d4d4d4;
-    }
-
-    table.lamp th,
-    td {
-      padding: 10px;
-    }
-
-    table.lamp td {
-      width: 40px;
-    }
-  </style>
 </head>
 
 <body>
@@ -63,31 +30,28 @@
       <!--/.nav-collapse -->
     </div>
   </nav>
-
+  <br />
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <form class="form-inline" role="form" method="POST" action="{% url 'main:display_msg' %}">
+        <form class="form-inline" method="POST" action="{% url 'main:display_msg' %}">
           <div class="form-group">
-            <label class="sr-only" for="name">search</label>
-            <input type="text" class="form-control" id="search" placeholder="device sn"> {% csrf_token %} {{ form.as_p }}
-            <button type="button" class="btn btn-info" name="submit">search</button>
+            <input type="number" class="form-control" name="sn" placeholder="device sn">
+            <input type="submit" class="btn btn-info" value="search">
           </div>
         </form>
       </div>
       <div class="col-md-1 col-md-offset-2">
         <form method="POST" action="{% url 'main:publish_rtc' %}">
-          {% csrf_token %} {{ form.as_p }}
-          <button type="button" class="btn btn-primary" name="submit">Send RTC</button>
+          <input type="submit" class="btn btn-primary" value="Send RTC">
         </form>
       </div>
       <div class="col-md-4 col-md-offset-1">
         <form class="form-inline" role="form" method="POST" action="{% url 'main:publish_dac' %}">
           <div class="form-group">
-            <label class="sr-only" for="name">dac</label>
-            <input type="text" class="form-control" id="dac" placeholder="dac value">
-            <button type="button" class="btn btn-primary" name="submit">Set DAC</button>
-            {% csrf_token %} {{ form.as_p }}
+          {% csrf_token %}
+          <input type="number" class="form-control" name="dac" placeholder="DAC value(0-3.3)">
+          <input type="submit" class="btn btn-primary" value="Set DAC">
           </div>
         </form>
       </div>
@@ -95,7 +59,47 @@
   </div>
   </div>
   </div>
+  <br />
+  <div class="panel-body container">
+    <section id="no-more-tables">
+      <table class="table noneColBorder table-bordered table-hover table-striped">
+        <thead class="cf">
+          <tr>
+            <th class="text-center">Number</th>
+            <th class="text-center">Date</th>
+            <th class="text-center">Sn</th>
+            <th class="text-center">Eth-MAC</th>
+            <th class="text-center">Wifi-MAC</th>
+            <th class="text-center">IMEI</th>
+            <th class="text-center">T(℃)</th>
+            <th class="text-center">ADC1</th>
+            <th class="text-center">ADC2</th>
+            <th class="text-center">RS485</th>
+            <th class="text-center">LoRa1</th>
+            <th class="text-center">LORa2</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for msg in msgs %}
+          <tr>
+            <td> {{ forloop.counter }}</td>
+            <td> {{ msg.1|date:"Y-m-d H:i:s" }}</td>
+            <td> {{ msg.2 }}</td>
+            <td> {{ msg.3 }}</td>
+            <td> {{ msg.4 }}</td>
+            <td> {{ msg.5 }}</td>
+            <td> {{ msg.6 }}</td>
+            <td> {{ msg.7 }}</td>
+            <td> {{ msg.8 }}</td>
+            <td> {{ msg.9 }}</td>
+            <td> {{ msg.10 }}</td>
+            <td> {{ msg.11 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
 
 </body>
-
 </html>
