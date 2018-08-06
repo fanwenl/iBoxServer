@@ -4,7 +4,7 @@ import sqlite3
 import threading
 import time
 from datetime import datetime
-
+from . models import msg
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 
@@ -29,6 +29,9 @@ class MqttClient:
     def publish(self, topic, data, qos=0):
         self.client.publish(topic, data, qos)
 
+    def subscribe(self, topic, qos=0):
+        self.client.subscribe(topic, qos)
+
     def loop(self, timeout=None):
         thread = threading.Thread(target=self._loop, args=(timeout,))
         # thread.setDaemon(True)
@@ -48,7 +51,7 @@ class MqttClient:
             print("\nMQTT Connected faild!\r\n")
 
     def _on_message(self, client, userdata, msg):  # 从服务器接受到消息后回调此函数
-        if(msg.topic == "msg"):
+        if(msg.topic == "mqtt/msg"):
             data = self._is_json(msg.payload)
             if(data):
                 msg_topic_callback(data)
@@ -70,13 +73,7 @@ class MqttClient:
 
 def msg_topic_callback(data):
     print(data)
-    print(len(data))
-    print(type(data['data']))
-    data_list = data['data']
-    print(len(data_list))
-    print(data_list[0])
-    print(data_list[0]['temper'])
-
+    print(data['rtc'])
     # cx = sqlite3.connect("db.sqlite3")
     # cu = cx.cursor()
 
@@ -84,33 +81,36 @@ def msg_topic_callback(data):
     # data = (None, datetime.now(), 223, 444, "00:00:00:01",
     #         "00:00:00:02", 99, 00, 00, 00, 00, 11)
     # cu.execute(save_sql, data)
-
     # cx.commit()
     # cx.close()
-    my_msg = msg(None)
+    local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(data['rtc'])))
+    my_msg = msg(None, local_time, int(data['device_sn']), data['eth_mac'], data['wifi_mac'],
+                 int(data['imei']), int(data['temper']), int(data['adc1']), int(data['adc2']), int(data['485']), int(data['lora1']), int(data['lora2']))
     my_msg.save()
 
 
-HOST = "121.40.104.4"
-PORT = 61613
-client = MqttClient(HOST, PORT)
+HOST="121.40.104.4"
+PORT=61613
 
-# def mqtt_main(client):
-    #    HOST = "121.40.104.4"
-    #    PORT = 61613
-    #client = MqttClient(HOST, PORT)
-    # client.connect('admin', 'password')
-    # client.publish('test-0', '我上线啦!')
-    # client.loop()
+client=MqttClient(HOST, PORT)
+client.connect('admin', 'password')
+client.publish('test-0', '我上线啦!')
+client.subscribe('mqtt/msg', 0)
+client.loop()
 
 
 def mqtt_publish(topic, message):
     client.publish(topic, message)
 
 
-if __name__ == '__main__':
+def mqtt_main():
     client.connect('admin', 'password')
     client.publish('test-0', '我上线啦!')
     client.loop()
     while True:
+        client.publish('test-0', '我上线啦!')
         time.sleep(2)
+
+
+if __name__ == '__main__':
+    mqtt_main()

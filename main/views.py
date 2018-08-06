@@ -1,10 +1,11 @@
+import json
+import time
+import sys
 from django.shortcuts import render
 from django.urls import reverse
 from django.db import connection
 from . models import dac, msg
-from . mqtt  import mqtt_publish
-import json
-import time
+# from . mqtt import mqtt_publish, client
 
 
 def get_cursor():
@@ -24,15 +25,13 @@ def display_msg(request):
         if sn != '':
             # cursor = get_cursor()
             # cursor.execute(
-            #     "select id,time,sn,imei,eth_mac,wifi_mac,temper,adc1,adc2,rs485,lora1,lora2 from main_msg where sn=%s" % sn)
+            #      "select id,time,sn,imei,eth_mac,wifi_mac,temper,adc1,adc2,rs485,lora1,lora2 from main_msg where sn=%s" % sn)
             # msgs = cursor.fetchall()
-            msgs = msg.objects.filter(sn=sn)
-            # msgs = msg.objects.all()
-            print(msgs)
-            print(type(msgs))
+            # 通过SN查找 那时间排序，取20条
+            msgs = msg.objects.filter(sn=sn).order_by('-time').values_list()[:20]
             return render(request, 'index.html', context={"msgs": msgs})
-        else:
-            return render(request, 'index.html')
+        
+    return render(request, 'index.html')
 
 
 def publish_rtc(request):
