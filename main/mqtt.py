@@ -1,7 +1,6 @@
 # coding=utf-8
 import json
 import sqlite3
-import threading
 import time
 from datetime import datetime
 from . models import msg
@@ -33,20 +32,15 @@ class MqttClient:
         self.client.subscribe(topic, qos)
 
     def loop(self, timeout=None):
-        thread = threading.Thread(target=self._loop, args=(timeout,))
-        # thread.setDaemon(True)
-        thread.start()
-
-    def _loop(self, timeout=None):
         if not timeout:
-            self.client.loop_forever()
+            self.client.loop_start()
         else:
             self.client.loop(timeout)
 
     def _on_connect(self, client, userdata, flags, rc):
         if(rc == 0):
             print("\nMQTT Connected success!\r\n")
-            client.subscribe("msg")
+            client.subscribe('mqtt/msg', 0)
         else:
             print("\nMQTT Connected faild!\r\n")
 
@@ -96,7 +90,6 @@ PORT=61613
 client=MqttClient(HOST, PORT)
 client.connect('admin', 'password')
 client.publish('test-0', '我上线啦!')
-client.subscribe('mqtt/msg', 0)
 client.loop()
 
 
