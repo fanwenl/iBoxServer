@@ -30,7 +30,7 @@ iBoxServer是一个简单的iBox数据的管理平台，实现简单的上报数
   ```
 
 * RTC时间下发的主题为`mqtt/config`
-* 
+  
   ``` json
   {
     "rtc":
@@ -38,7 +38,7 @@ iBoxServer是一个简单的iBox数据的管理平台，实现简单的上报数
   ```
 
 * DAC输出设置的主题为`mqtt/action`
-* 
+ 
   ``` json
   {
     "dac":
