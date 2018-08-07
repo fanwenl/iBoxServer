@@ -36,6 +36,7 @@
       <div class="col-md-4">
         <form class="form-inline" method="POST" action="{% url 'main:display_msg' %}">
           <div class="form-group">
+            {% csrf_token %}
             <input type="number" class="form-control" name="sn" placeholder="device sn">
             <input type="submit" class="btn btn-info" value="search">
           </div>
@@ -43,15 +44,16 @@
       </div>
       <div class="col-md-1 col-md-offset-2">
         <form method="POST" action="{% url 'main:publish_rtc' %}">
+          {% csrf_token %}
           <input type="submit" class="btn btn-primary" value="Send RTC">
         </form>
       </div>
       <div class="col-md-4 col-md-offset-1">
         <form class="form-inline" role="form" method="POST" action="{% url 'main:publish_dac' %}">
           <div class="form-group">
-          {% csrf_token %}
-          <input type="number" class="form-control" name="dac" placeholder="DAC value(0-3.3)">
-          <input type="submit" class="btn btn-primary" value="Set DAC">
+            {% csrf_token %}
+            <input type="number" class="form-control" name="dac" placeholder="DAC value(0-330)">
+            <input type="submit" class="btn btn-primary" value="Set DAC">
           </div>
         </form>
       </div>
@@ -68,9 +70,9 @@
             <th class="text-center">Number</th>
             <th class="text-center">Date</th>
             <th class="text-center">Sn</th>
+            <th class="text-center">IMEI</th>
             <th class="text-center">Eth-MAC</th>
             <th class="text-center">Wifi-MAC</th>
-            <th class="text-center">IMEI</th>
             <th class="text-center">T(℃)</th>
             <th class="text-center">ADC1</th>
             <th class="text-center">ADC2</th>
@@ -102,4 +104,5 @@
   </div>
 
 </body>
+
 </html>

@@ -57,7 +57,7 @@ def publish_dac(request):
             dac_value = dac(data = dac_data)
             dac_value.save()
             print("下发DAC")
-            data = {'dac':dac_data}
+            data = {'dac':int(dac_data)}
             data=json.dumps(data)
             print(data)
             mqtt_publish("mqtt/action",data)
