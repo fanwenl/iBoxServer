@@ -74,18 +74,19 @@ class MqttClient:
 def msg_topic_callback(data):
     print(data)
     print(data['rtc'])
+
     # cx = sqlite3.connect("db.sqlite3")
     # cu = cx.cursor()
-
     # save_sql = '''insert into main_msg values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     # data = (None, datetime.now(), 223, 444, "00:00:00:01",
     #         "00:00:00:02", 99, 00, 00, 00, 00, 11)
     # cu.execute(save_sql, data)
     # cx.commit()
     # cx.close()
+
     local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(data['rtc'])))
-    my_msg = msg(None, local_time, int(data['device_sn']), data['eth_mac'], data['wifi_mac'],
-                 int(data['imei']), int(data['temper']), int(data['adc1']), int(data['adc2']), int(data['485']), int(data['lora1']), int(data['lora2']))
+    my_msg = msg(None, local_time, int(data['device_sn']), int(data['imei']), data['eth_mac'], data['wifi_mac'],
+                 int(data['temper']), int(data['adc1']), int(data['adc2']), int(data['485']), int(data['lora1']), int(data['lora2']))
     my_msg.save()
 
 

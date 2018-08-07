@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.db import connection
 from . models import dac, msg
-# from . mqtt import mqtt_publish, client
+from . mqtt import mqtt_publish, client
 
 
 def get_cursor():
