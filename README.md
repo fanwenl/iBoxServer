@@ -1,5 +1,7 @@
 # iBoxServer #
 
+[![Build Status](https://travis-ci.org/fanwenl/iBoxServer.svg?branch=master)](https://travis-ci.org/fanwenl/iBoxServer)
+
 iBoxServer是一个简单的iBox数据的管理平台，实现简单的上报数据查询、数据下发。
 
 ## 功能介绍 ##
