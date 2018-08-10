@@ -1,13 +1,14 @@
 language: python
 
-python：
+python: 
     - "3.6"
-env:
+
+env: 
   - DJANGO=2.0.7
 
-install:
+install: 
   - pip install --upgrade pip --use-mirrors
   - pip install -r requirements.txt --use-mirrors
 
-script:
+script: 
   - python manage.py main
